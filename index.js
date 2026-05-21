@@ -13,14 +13,22 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app)
+
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://chat-app-azure-one-74.vercel.app"
+];
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"]
+         origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true
     }
 });
-
-app.use(cors());
 app.use(express.json());
 
 // Connect to MongoDB
